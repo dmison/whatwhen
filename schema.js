@@ -1,36 +1,32 @@
-const {sessions} = require('./data.js');
+const {makeExecutableSchema} = require('graphql-tools');
+const resolvers = require('./resolvers.js');
 
-const {
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLNonNull,
-  GraphQLString,
-  GraphQLList
-} = require('graphql');
+const Schema = `
+# A presentation session
+type Session {
+  _id: String!
+  title: String!
+  location: String!
+  start: String!
+  summary: String!
+  presenter: Presenter
+}
 
-const Session = new GraphQLObjectType({
-  name: 'Session',
-  description: 'A presentation session',
-  fields: () => ({
-    _id: {type: new GraphQLNonNull(GraphQLString)},
-    title: {type: new GraphQLNonNull(GraphQLString)}
-  })
-});
+type Presenter {
+  name: String!
+  email: String
+}
 
-const Query = new GraphQLObjectType({
-  name: 'RootQuery',
-  fields: {
-    sessions: {
-      type: new GraphQLList(Session),
-      resolve: (rootValue, args, info) => {
-        return sessions;
-      }
-    }
-  }
-});
+type Query {
+  sessions: [Session]
+}
 
-const Schema = new GraphQLSchema({
+schema {
   query: Query
-});
+}
+`;
 
-module.exports = Schema;
+module.exports = makeExecutableSchema({
+  typeDefs: Schema,
+  resolvers: resolvers
+});
