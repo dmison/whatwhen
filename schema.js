@@ -19,6 +19,7 @@ type Presenter {
 
 type Query {
   sessions: [Session]
+  session(_id: String!): Session
 }
 
 schema {
