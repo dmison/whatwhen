@@ -5,22 +5,46 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node -r babel-register index.js"
+    "start-server": "nodemon src/server/index.js -w src/server",
+    "start-client": "webpack-dev-server --config=webpack.dev.config.js --inline --hot"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.1",
+    "bootstrap": "^3.3.7",
+    "cors": "^2.8.1",
     "express": "^4.15.2",
+    "font-awesome": "^4.7.0",
     "graphql": "^0.9.1",
     "graphql-server-express": "^0.6.0",
-    "graphql-tools": "^0.10.1"
+    "graphql-tools": "^0.10.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.3",
+    "react-router": "^4.0.0",
+    "redux": "^3.6.0"
   },
   "devDependencies": {
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
     "babel-preset-env": "^1.2.2",
-    "webpack": "^2.3.1"
+    "babel-preset-react": "^6.23.0",
+    "babel-preset-react-hmre": "^1.1.1",
+    "css-loader": "^0.27.3",
+    "eslint": "^3.18.0",
+    "eslint-plugin-react": "^6.10.3",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.10.1",
+    "json-loader": "^0.5.4",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.2",
+    "node-sass": "^4.5.1",
+    "nodemon": "^1.11.0",
+    "sass-loader": "^6.0.3",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.3.1",
+    "webpack-dev-server": "^2.4.2"
   }
 }

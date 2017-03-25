@@ -3,9 +3,12 @@ const {graphiqlExpress, graphqlExpress} = require('graphql-server-express');
 const bodyParser = require('body-parser');
 const {printSchema} = require('graphql/utilities/schemaPrinter');
 const schema = require('./schema.js');
+const cors = require('cors');
 
-const GRAPHQL_PORT = 8080;
+const GRAPHQL_PORT = 9000;
 const graphQLServer = express();
+
+graphQLServer.use('/graphql', cors());
 
 graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress({
   schema: schema,
