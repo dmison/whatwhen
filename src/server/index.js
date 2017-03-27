@@ -8,6 +8,7 @@ const cors = require('cors');
 const GRAPHQL_PORT = 9000;
 const graphQLServer = express();
 
+// https://github.com/graphql/express-graphql/issues/14
 graphQLServer.use('/graphql', cors());
 
 graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress({

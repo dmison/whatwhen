@@ -21,9 +21,10 @@
     "graphql-server-express": "^0.6.0",
     "graphql-tools": "^0.10.1",
     "react": "^15.4.2",
+    "react-apollo": "^1.0.0-rc.3",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
-    "react-router": "^4.0.0",
+    "react-router-dom": "^4.0.0",
     "redux": "^3.6.0"
   },
   "devDependencies": {
