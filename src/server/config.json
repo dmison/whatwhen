@@ -1,0 +1,10 @@
+{
+  "port": 9000,
+  "auth":{
+    "google": {
+      "clientID":"",
+      "clientSecret":"",
+      "callbackURL":"http://localhost:9000/auth/callback"
+    }
+  }
+}

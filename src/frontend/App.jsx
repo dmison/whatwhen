@@ -8,6 +8,7 @@ const App = (props) => {
       <ul>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/sessions'>Sessions</Link></li>
+        <li><a href='/logout'>logout</a></li>
 
       </ul>
       {props.children}
