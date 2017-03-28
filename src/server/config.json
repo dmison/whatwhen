@@ -1,5 +1,6 @@
 {
   "port": 9000,
+  "domainLimit": "@company.com",
   "auth":{
     "google": {
       "clientID":"",

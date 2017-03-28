@@ -4,78 +4,31 @@ const bodyParser = require('body-parser');
 const {printSchema} = require('graphql/utilities/schemaPrinter');
 const schema = require('./schema.js');
 const cors = require('cors');
+const rawToProfile = require('./rawToProfile.js');
 
 const config = require('./config.json');
 const graphQLServer = express();
 
 // ======================================================== authentication
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-// we can't use google+ profiles - why are they enforced by the Strategy?
-// https://github.com/jaredhanson/passport-google-oauth/issues/46
-// GoogleStrategy.prototype.userProfile = function(token, done) {
-//   done(null, {})
-// }
-// #####################################################################
-GoogleStrategy.prototype.userProfile = function(accessToken, done) {
-  this._oauth2.get('https://people.googleapis.com//v1/people/me',  accessToken, function (err, body, res) {
-    if (err) { return done(new InternalOAuthError('failed to fetch user profile', err)); }
-
-    try {
-      var json = JSON.parse(body);
-
-      // var profile = { provider: 'google' };
-    //   profile.id           = json.id;
-    //   profile.displayName  = json.displayName;
-    //   profile.name         = json.name;
-    //   if (json.birthday) profile.birthday = json.birthday;
-    //   if (json.relationshipStatus) profile.relationship = json.relationshipStatus;
-    //   if (json.objectType && json.objectType == 'person') {
-    //     profile.isPerson = true;
-    //   }
-    //   if (json.isPlusUser) profile.isPlusUser = json.isPlusUser;
-    //   if (json.placesLived) profile.placesLived = json.placesLived;
-    //   if (json.language) profile.language = json.language;
-    //   if (json.emails) {
-    //     profile.emails = json.emails;
-    //
-    //     profile.emails.some(function(email) {
-    //       if (email.type === 'account') {
-    //         profile.email = email.value
-    //         return true
-    //       }
-    //     })
-    //   }
-    //   if (json.gender) profile.gender = json.gender;
-    //   if (json.image && json.image.url) {
-    //     var photo = {
-    //       value: json.image.url
-    //     };
-    //     if (json.image.isDefault) photo.type = 'default';
-    //     profile.photos = [photo];
-    //   }
-    //
-    //   profile._raw = body;
-    //   profile._json = json;
-    //
-      done(null, json);
-    } catch(e) {
-      done(e);
-    }
-
-  });
-};
 // #####################################################################
 
 passport.use(new GoogleStrategy({
   clientID: config.auth.google.clientID,
   clientSecret: config.auth.google.clientSecret,
   callbackURL: config.auth.google.callbackURL,
-  passReqToCallback: true
+  passReqToCallback: true,
+  userProfileURL: 'https://people.googleapis.com//v1/people/me'
 }, function(request, accessToken, refreshToken, profile, done){
-  console.log('profile: ',profile);
-  return done(null, profile);
+  const user = rawToProfile(profile._json);
+  if(user.email.endsWith(config.domainLimit)){
+    // upsert the user into the database
+    return done(null, user);
+  } else {
+    done("Red Hat Employees only.  Sorry.", null);
+  }
 }
 ));
 
@@ -88,13 +41,14 @@ graphQLServer.use(passport.session());
 passport.serializeUser(function(user, done) {
   // placeholder for custom user serialization
   // null is for errors
-  done(null, user);
+  done(null, user.resourceName);
 });
 
 passport.deserializeUser(function(user, done) {
   // placeholder for custom user deserialization.
   // maybe you are going to get the user from mongo by id?
   // null is for errors
+  console.log(user);
   done(null, user);
 });
 
