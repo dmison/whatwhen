@@ -10,6 +10,7 @@ type Session {
   start: String!
   summary: String!
   presenter: Presenter
+  reviews: [Review]
 }
 
 type Presenter {
@@ -17,9 +18,26 @@ type Presenter {
   email: String
 }
 
+type User {
+  provider: String!,
+  resourceName: String!,
+  name: String!,
+  avatar: String,
+  email: String,
+  title: String,
+  location: String
+}
+
+type Review {
+  comment: String,
+  rating: Int,
+  reviwer: User
+}
+
 type Query {
   sessions: [Session]
   session(_id: String!): Session
+  user(resourceName: String!): User
 }
 
 schema {
