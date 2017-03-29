@@ -1,6 +1,9 @@
 {
-  "port": 9000,
+  "port": 9090,
   "domainLimit": "@company.com",
+  "admins":[
+    "person@company.com"
+  ],
   "auth":{
     "google": {
       "clientID":"",
