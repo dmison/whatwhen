@@ -65,7 +65,7 @@ graphQLServer.get('/auth/callback', passport.authenticate('google', { failureRed
 );
 
 graphQLServer.use('/login', (req,res)=>{
-  res.sendFile(__dirname + '/frontend/login.html');
+  res.sendFile(__dirname + '/public/login.html');
 });
 
 graphQLServer.get('/logout', function(req, res) {
@@ -76,8 +76,8 @@ graphQLServer.get('/logout', function(req, res) {
 
 
 // ======================================================= assets
-graphQLServer.use('/index.js', (req,res)=>{ res.sendFile(__dirname + '/frontend/index.js'); });
-// graphQLServer.use('/styles.css', (req,res)=>{ res.sendFile(__dirname + '/frontend/styles.css'); });
+// graphQLServer.use('/index.js', (req,res)=>{ res.sendFile(__dirname + '/public/index.js'); });
+// graphQLServer.use('/styles.css', (req,res)=>{ res.sendFile(__dirname + '/public/styles.css'); });
 
 
 
@@ -100,7 +100,7 @@ graphQLServer.use('/schema', (req,res)=>{
   res.send(printSchema(schema));
 });
 
-graphQLServer.use('/', ensureAuthenticated, (req,res)=>{ res.sendFile(__dirname + '/frontend/index.html'); });
+graphQLServer.use('/', ensureAuthenticated, (req,res)=>{ res.sendFile(__dirname + '/public/index.html'); });
 
 graphQLServer.listen(config.port, ()=>{
   console.log('running ... ');

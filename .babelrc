@@ -1,0 +1,15 @@
+{
+  "presets": ["env", "react"],
+  "env": {
+    "development": {
+      "presets": ["react-hmre"]
+    },
+    "production": {
+      "presets": []
+    },
+    "test": {
+      "plugins": [
+      ]
+    }
+  }
+}
