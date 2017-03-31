@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-server": "nodemon src/server/server.js -w src/server/**/*",
+    "start-server": "nodemon src/server/server.js --watch src/server",
     "start-client": "webpack-dev-server --config=webpack.dev.config.js --hot --inline --port=9000",
     "dev-client-build": "webpack --config=webpack.dev-build.config.js"
   },
