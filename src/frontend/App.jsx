@@ -4,6 +4,7 @@ import {ApolloClient, ApolloProvider, createNetworkInterface} from 'react-apollo
 
 import Nav from 'react-bootstrap/lib/Nav';
 import Navbar from 'react-bootstrap/lib/Navbar';
+import NavItem from './NavItem/NavItem.js';
 
 import Home from './Home.jsx';
 import SessionsContainer from './SessionsContainer.js';
