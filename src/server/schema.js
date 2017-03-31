@@ -40,8 +40,15 @@ type Query {
   user(resourceName: String!): User
 }
 
+type Mutation {
+  addSession(title: String!, summary: String, location:String start:String ): Session
+  updateSession(_id:String!, summary: String, location:String start:String): Session
+  deleteSession(_id:String!): Session
+}
+
 schema {
   query: Query
+  mutation: Mutation
 }
 `;
 

@@ -4,6 +4,11 @@
   "admins":[
     "person@company.com"
   ],
+  "db": {
+    "mongodb":{
+      "connectionURL": "mongodb://localhost/event"
+    }
+  },
   "auth":{
     "google": {
       "clientID":"",
