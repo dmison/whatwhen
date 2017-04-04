@@ -7,8 +7,12 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import NavItem from './NavItem/NavItem.js';
 
 import Home from './Home.jsx';
-import SessionsContainer from './SessionsContainer.js';
-import AdminContainer from './Admin/GraphQLContainer.js';
+import Sessions from './Sessions.jsx';
+
+import Admin from './Admin/Admin.jsx';
+import AdminSessions from './Admin/Sessions/AdminSessions.jsx';
+import SessionNew from './Admin/Sessions/SessionNew.jsx';
+import SessionUpdate from './Admin/Sessions/SessionUpdate.jsx';
 
 // const client = new ApolloClient();
 const networkInterface = createNetworkInterface({
@@ -19,6 +23,7 @@ const networkInterface = createNetworkInterface({
 });
 const client = new ApolloClient({
   networkInterface,
+  dataIdFromObject: o => o._id
 });
 
 
@@ -49,8 +54,13 @@ const App = (props) => {
 
       <div className='container'>
         <Route exact path='/' component={Home} />
-        <Route exact path='/sessions' component={SessionsContainer} />
-        <Route exact path='/admin' component={AdminContainer} />
+        <Route exact path='/sessions' component={Sessions} />
+
+        <Route exact path='/admin' component={Admin} />
+        <Route exact path='/admin/sessions' component={AdminSessions} />
+        <Route exact path='/admin/sessions/new' component={SessionNew} />
+        <Route exact path='/admin/sessions/update/:_id' component={SessionUpdate} />
+
       </div>
     </div>
   </HashRouter>

@@ -6,6 +6,9 @@ const resolveFunctions = {
   Query: {
     sessions(){
       return Session.find();
+    },
+    session(_,args){
+      return Session.findOne({_id: args._id});
     }
   },
   Mutation: {

@@ -1,6 +1,5 @@
 import React from 'react';
-import {graphql} from 'react-apollo';
-import gql from 'graphql-tag';
+import {gql, graphql} from 'react-apollo';
 
 const Sessions = (props) => {
 
@@ -24,4 +23,6 @@ Sessions.propTypes = {
   data: React.PropTypes.object
 };
 
-export default Sessions;
+const AllSessions = gql`query { sessions { _id, title }}`;
+
+export default graphql(AllSessions)(Sessions);

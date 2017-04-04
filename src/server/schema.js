@@ -1,27 +1,29 @@
 const {makeExecutableSchema} = require('graphql-tools');
 const resolvers = require('./resolvers.js');
 
+// presenter: Presenter
+// reviews: [Review]
+
+
 const Schema = `
 # A presentation session
 type Session {
-  _id: String!
-  title: String!
-  location: String!
-  start: String!
-  summary: String!
-  presenter: Presenter
-  reviews: [Review]
+  _id: String
+  title: String
+  location: String
+  start: String
+  summary: String
 }
 
 type Presenter {
-  name: String!
+  name: String
   email: String
 }
 
 type User {
-  provider: String!,
-  resourceName: String!,
-  name: String!,
+  provider: String,
+  resourceName: String,
+  name: String,
   avatar: String,
   email: String,
   title: String,
