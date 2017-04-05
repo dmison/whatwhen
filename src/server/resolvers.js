@@ -1,5 +1,5 @@
 // const {sessions} = require('./data.js');
-const {Session} = require('./connectors.js');
+const {Session, Location} = require('./connectors.js');
 const uuid =require('node-uuid');
 
 const resolveFunctions = {
@@ -9,6 +9,12 @@ const resolveFunctions = {
     },
     session(_,args){
       return Session.findOne({_id: args._id});
+    },
+    locations(){
+      return Location.find();
+    },
+    location(_,args){
+      return Location.findOne({_id: args._id});
     }
   },
   Mutation: {
@@ -25,6 +31,19 @@ const resolveFunctions = {
     },
     deleteSession(_, args){
       return Session.deleteOne({_id: args._id});
+    },
+
+    addLocation(_, args){
+      args._id = uuid.v1();
+      args.description = args.description?args.description:'';
+      const newLocation = new Location(args);
+      return newLocation.save();
+    },
+    updateLocation(_, args){
+      return Location.findOneAndUpdate({_id:args._id}, {$set: args});
+    },
+    deleteLocation(_, args){
+      return Location.deleteOne({_id: args._id});
     }
 
   }

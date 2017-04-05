@@ -14,7 +14,10 @@ import AdminSessions from './Admin/Sessions/AdminSessions.jsx';
 import SessionNew from './Admin/Sessions/SessionNew.jsx';
 import SessionUpdate from './Admin/Sessions/SessionUpdate.jsx';
 
-// const client = new ApolloClient();
+import AdminLocations from './Admin/Locations/AdminLocations.jsx';
+import LocationNew from './Admin/Locations/LocationNew.jsx';
+import LocationUpdate from './Admin/Locations/LocationUpdate.jsx';
+
 const networkInterface = createNetworkInterface({
   uri: '/graphql',
   opts: {
@@ -61,6 +64,9 @@ const App = (props) => {
         <Route exact path='/admin/sessions/new' component={SessionNew} />
         <Route exact path='/admin/sessions/update/:_id' component={SessionUpdate} />
 
+          <Route exact path='/admin/locations' component={AdminLocations} />
+          <Route exact path='/admin/locations/new' component={LocationNew} />
+          <Route exact path='/admin/locations/update/:_id' component={LocationUpdate} />
       </div>
     </div>
   </HashRouter>

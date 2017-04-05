@@ -20,6 +20,12 @@ type Presenter {
   email: String
 }
 
+type Location {
+  _id: String
+  name: String
+  description: String
+}
+
 type User {
   provider: String,
   resourceName: String,
@@ -39,6 +45,10 @@ type Review {
 type Query {
   sessions: [Session]
   session(_id: String!): Session
+
+  locations: [Location]
+  location(_id: String!): Location
+
   user(resourceName: String!): User
 }
 
@@ -46,6 +56,10 @@ type Mutation {
   addSession(title: String!, summary: String, location:String start:String ): Session
   updateSession(_id:String!, summary: String, location:String start:String): Session
   deleteSession(_id:String!): Session
+
+  addLocation(name: String!, description: String): Location
+  updateLocation(_id:String!, name: String, description: String): Location
+  deleteLocation(_id:String!): Location
 }
 
 schema {
