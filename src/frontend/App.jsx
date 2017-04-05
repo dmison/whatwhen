@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink, Link, IndexRoute, Route, HashRouter} from 'react-router-dom';
+import {NavLink, Link, IndexRoute, Route, HashRouter, Switch} from 'react-router-dom';
 import {ApolloClient, ApolloProvider, createNetworkInterface} from 'react-apollo';
 
 import Nav from 'react-bootstrap/lib/Nav';
@@ -10,6 +10,8 @@ import Home from './Home.jsx';
 import Sessions from './Sessions.jsx';
 
 import Admin from './Admin/Admin.jsx';
+import AdminBreadCrumps from './Admin/AdminBreadCrumps.jsx';
+
 import AdminSessions from './Admin/Sessions/AdminSessions.jsx';
 import SessionNew from './Admin/Sessions/SessionNew.jsx';
 import SessionUpdate from './Admin/Sessions/SessionUpdate.jsx';
@@ -56,17 +58,21 @@ const App = (props) => {
       </Navbar>
 
       <div className='container'>
-        <Route exact path='/' component={Home} />
-        <Route exact path='/sessions' component={Sessions} />
+        <Route path='/admin' component={AdminBreadCrumps} />
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route exact path='/sessions' component={Sessions} />
 
-        <Route exact path='/admin' component={Admin} />
-        <Route exact path='/admin/sessions' component={AdminSessions} />
-        <Route exact path='/admin/sessions/new' component={SessionNew} />
-        <Route exact path='/admin/sessions/update/:_id' component={SessionUpdate} />
+          <Route exact path='/admin' component={Admin} />
+
+          <Route exact path='/admin/sessions' component={AdminSessions} />
+          <Route exact path='/admin/sessions/new' component={SessionNew} />
+          <Route exact path='/admin/sessions/update/:_id' component={SessionUpdate} />
 
           <Route exact path='/admin/locations' component={AdminLocations} />
           <Route exact path='/admin/locations/new' component={LocationNew} />
           <Route exact path='/admin/locations/update/:_id' component={LocationUpdate} />
+        </Switch>
       </div>
     </div>
   </HashRouter>
