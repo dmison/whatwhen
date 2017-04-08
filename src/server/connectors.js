@@ -1,5 +1,5 @@
 const Mongoose = require('mongoose');
-const sessionSchema = require('./db/sessionSchema.js');
+const sessionSchema = require('./db/Session.js');
 const locationSchema = require('./db/Location.js');
 
 const config = require('./config.json');

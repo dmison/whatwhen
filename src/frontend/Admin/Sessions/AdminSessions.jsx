@@ -7,14 +7,19 @@ const Admin = (props) => {
     <div>
       <h2>Manage Sessions</h2>
       <Link className='btn btn-info btn-sm' to='/admin/sessions/new'>Add Session</Link>
-      {props.loading?'loading': <AdminList  sessions={props.data.sessions}
-                                            deleteSession={(_id)=>{
-                                              props.deleteSession({variables:{sessionID: _id}}).then(()=>{
-                                              props.data.refetch();
-                                              });} } /> }
+      {props.loading?'loading':
+        <AdminList
+          sessions={props.data.sessions}
+          deleteSession={(_id)=>{
+            props.deleteSession({variables:{sessionID: _id},
+              refetchQueries: [{
+                query: gql`query { sessions { _id, title, summary, location { _id, name, description } }}`
+              }]});
+        } } /> }
     </div>
   );
-};
+}
+
 
 const AdminList = (props) => {
   return <ul>
@@ -31,10 +36,9 @@ Admin.propTypes = {
   data: React.PropTypes.object
 };
 
-const allSessions = gql`query { sessions { _id, title }}`;
+const allSessions = gql`query { sessions { _id, title, summary, location { _id, name, description } }}`;
 
 const deleteSession = gql`mutation deleteSession($sessionID: String!){ deleteSession(_id: $sessionID){ _id }}`;
-
 
 export default compose(
   graphql(allSessions),

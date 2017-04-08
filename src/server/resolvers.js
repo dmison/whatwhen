@@ -5,10 +5,10 @@ const uuid =require('node-uuid');
 const resolveFunctions = {
   Query: {
     sessions(){
-      return Session.find();
+      return Session.find().populate('location');
     },
     session(_,args){
-      return Session.findOne({_id: args._id});
+      return Session.findOne({_id: args._id}).populate('location');
     },
     locations(){
       return Location.find();
@@ -19,22 +19,17 @@ const resolveFunctions = {
   },
   Mutation: {
     addSession(_, args){
-      args._id = uuid.v1();
-      args.summary = args.summary?args.summary:'';
-      args.location = args.location?args.location:'';
-      args.start = args.start?args.start:'';
-      const newSession = new Session(args);
+      const newSession = new Session(args).populate('location');
       return newSession.save();
     },
     updateSession(_, args){
-      return Session.findOneAndUpdate({_id:args._id}, {$set: args});
+      return Session.findOneAndUpdate({_id:args._id}, {$set: args}).populate('location').exec();
     },
     deleteSession(_, args){
       return Session.deleteOne({_id: args._id});
     },
 
     addLocation(_, args){
-      args._id = uuid.v1();
       args.description = args.description?args.description:'';
       const newLocation = new Location(args);
       return newLocation.save();

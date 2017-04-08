@@ -71,6 +71,8 @@ const updateLocation = gql`mutation updateLocation($_id: String!, $name: String,
   }
 }`;
 
-export default compose( graphql(thisLocation,{name: 'data', options: (props)=>{
-  return { variables: { _id: props.match.params._id}}
-}}), graphql(updateLocation, {name:'save'}) )(LocationNew);
+export default compose(
+  graphql(thisLocation,{name: 'data', options: (props)=>{
+    return { variables: { _id: props.match.params._id}}
+  }}),
+  graphql(updateLocation, {name:'save'}) )(LocationNew);

@@ -10,9 +10,8 @@ const Schema = `
 type Session {
   _id: String
   title: String
-  location: String
-  start: String
   summary: String
+  location: Location
 }
 
 type Presenter {
@@ -58,8 +57,8 @@ type Mutation {
   deleteSession(_id:String!): Session
 
   addLocation(name: String!, description: String): Location
-  updateLocation(_id:String!, name: String, description: String): Location
-  deleteLocation(_id:String!): Location
+  updateLocation(_id: String!, name: String, description: String): Location
+  deleteLocation(_id: String!): Location
 }
 
 schema {

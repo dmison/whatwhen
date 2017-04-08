@@ -9,9 +9,18 @@ class SessionNew extends React.Component {
       title: '',
       summary: '',
       location: '',
-      start:''
+      start:'',
+      locations: []
     }
     this._save = this._save.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(!nextProps.locations.loading){
+      this.setState({
+        locations: nextProps.locations.locations
+      });
+    }
   }
 
   render(){
@@ -27,7 +36,7 @@ class SessionNew extends React.Component {
             case 'summary': this.setState( { summary: update.value}); break;
             case 'location': this.setState( { location: update.value}); break;
             }
-          }} />
+          }} locations={this.state.locations} />
         <a className='btn btn-default btn-sm' onClick={this._save}>Save</a>
         <a className='btn btn-default btn-sm' onClick={()=>{
             this.props.history.replace('/admin/sessions');
@@ -38,14 +47,15 @@ class SessionNew extends React.Component {
   }
 
   _save(){
+    console.log(this.state);
     this.props.save({
       variables:{
         title: this.state.title,
         summary: this.state.summary,
-        location: this.state.location
+        location: this.state.location._id
       },
       refetchQueries: [{
-        query: gql`query { sessions { _id, title, location }}`
+        query: gql`query { sessions { _id, title }}`
       }]
     }
   ).then(()=>{this.props.history.replace('/admin/sessions');});
@@ -57,11 +67,12 @@ SessionNew.propTypes = {
   save: React.PropTypes.func
 };
 
+const allLocations = gql`query { locations { _id, name, description }}`;
 
-const addSession = gql`mutation addSession($title:String!, $summary:String){
-	addSession(title:$title, summary:$summary) {
-    _id
+const addSession = gql`mutation addSession($title:String!, $summary:String, $location:String){
+	addSession(title:$title, summary:$summary, location:$location) {
+    _id, title, summary, location { _id, name, description }
   }
 }`;
 
-export default compose( graphql(addSession, {name:'save'}) )(SessionNew);
+export default compose( graphql(addSession, {name:'save'}), graphql(allLocations, {name:'locations'}) )(SessionNew);
