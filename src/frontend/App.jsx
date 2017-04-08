@@ -20,6 +20,10 @@ import AdminLocations from './Admin/Locations/AdminLocations.jsx';
 import LocationNew from './Admin/Locations/LocationNew.jsx';
 import LocationUpdate from './Admin/Locations/LocationUpdate.jsx';
 
+import AdminPresenters from './Admin/Presenters/AdminPresenters.jsx';
+import PresenterNew from './Admin/Presenters/PresenterNew.jsx';
+import PresenterUpdate from './Admin/Presenters/PresenterUpdate.jsx';
+
 const networkInterface = createNetworkInterface({
   uri: '/graphql',
   opts: {
@@ -66,12 +70,17 @@ const App = (props) => {
           <Route exact path='/admin' component={Admin} />
 
           <Route exact path='/admin/sessions' component={AdminSessions} />
-          <Route exact path='/admin/sessions/new' component={SessionNew} />
           <Route exact path='/admin/sessions/update/:_id' component={SessionUpdate} />
+          <Route exact path='/admin/sessions/new' component={SessionNew} />
 
           <Route exact path='/admin/locations' component={AdminLocations} />
           <Route exact path='/admin/locations/new' component={LocationNew} />
           <Route exact path='/admin/locations/update/:_id' component={LocationUpdate} />
+
+          <Route exact path='/admin/presenters' component={AdminPresenters} />
+          <Route exact path='/admin/presenters/new' component={PresenterNew} />
+          <Route exact path='/admin/presenters/update/:_id' component={PresenterUpdate} />
+
         </Switch>
       </div>
     </div>

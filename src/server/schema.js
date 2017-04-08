@@ -12,11 +12,14 @@ type Session {
   title: String
   summary: String
   location: Location
+  presenter: Presenter
 }
 
 type Presenter {
+  _id: String
   name: String
   email: String
+  bio: String
 }
 
 type Location {
@@ -48,17 +51,24 @@ type Query {
   locations: [Location]
   location(_id: String!): Location
 
+  presenters: [Presenter]
+  presenter(_id: String!): Presenter
+
   user(resourceName: String!): User
 }
 
 type Mutation {
   addSession(title: String!, summary: String, location:String start:String ): Session
-  updateSession(_id:String!, summary: String, location:String start:String): Session
-  deleteSession(_id:String!): Session
+  updateSession(_id: String!, title: String!, summary: String, location:String start:String): Session
+  deleteSession(_id: String!): Session
 
   addLocation(name: String!, description: String): Location
   updateLocation(_id: String!, name: String, description: String): Location
   deleteLocation(_id: String!): Location
+
+  addPresenter(name: String!, email: String, bio: String): Presenter
+  updatePresenter(_id: String!, name: String, email: String, bio: String): Presenter
+  deletePresenter(_id: String!): Presenter
 }
 
 schema {
