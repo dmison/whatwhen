@@ -1,4 +1,5 @@
 import React from 'react';
+import {bool, object, func} from 'prop-types';
 
 const PresenterForm = (props) => {
     return (

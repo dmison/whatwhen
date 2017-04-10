@@ -1,6 +1,7 @@
 import React from 'react';
 import {gql, graphql, compose} from 'react-apollo';
 import LocationForm from './LocationForm.jsx';
+import {func} from 'prop-types';
 
 class LocationNew extends React.Component {
   constructor(props){

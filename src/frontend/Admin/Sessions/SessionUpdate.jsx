@@ -1,6 +1,7 @@
 import React from 'react';
 import {gql, graphql, compose} from 'react-apollo';
 import SessionForm from './SessionForm.jsx';
+import {func} from 'prop-types';
 
 class SessionUpdate extends React.Component {
   constructor(props){

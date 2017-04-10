@@ -1,6 +1,7 @@
 import React from 'react';
 import {gql, graphql, compose} from 'react-apollo';
 import PresenterForm from './PresenterForm.jsx';
+import {func} from 'prop-types';
 
 class PresenterNew extends React.Component {
   constructor(props){

@@ -1,4 +1,5 @@
 import React from 'react';
+import {bool, object, array, func} from 'prop-types';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
