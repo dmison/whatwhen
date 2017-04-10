@@ -5,10 +5,10 @@ const resolveFunctions = {
 
   Query: {
     sessions(){
-      return Session.find().populate('location');
+      return Session.find().populate('location presenter');
     },
     session(_,args){
-      return Session.findOne({_id: args._id}).populate('location');
+      return Session.findOne({_id: args._id}).populate('location presenter');
     },
     locations(){
       return Location.find();
@@ -27,12 +27,12 @@ const resolveFunctions = {
 
   Mutation: {
     addSession(_, args){
-      const newSession = new Session(args).populate('location');
+      const newSession = new Session(args).populate('location presenter');
       return newSession.save();
     },
     updateSession(_, args){
       console.log(args);
-      return Session.findOneAndUpdate({_id:args._id}, {$set: args}).populate('location').exec();
+      return Session.findOneAndUpdate(  {_id:args._id}, {$set: args}).populate('presenter location').exec();
     },
     deleteSession(_, args){
       return Session.deleteOne({_id: args._id});

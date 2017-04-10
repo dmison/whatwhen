@@ -1,7 +1,6 @@
 const {makeExecutableSchema} = require('graphql-tools');
 const resolvers = require('./resolvers.js');
 
-// presenter: Presenter
 // reviews: [Review]
 
 
@@ -58,8 +57,8 @@ type Query {
 }
 
 type Mutation {
-  addSession(title: String!, summary: String, location:String start:String ): Session
-  updateSession(_id: String!, title: String!, summary: String, location:String start:String): Session
+  addSession(title: String!, summary: String, location:String, presenter:String, start:String ): Session
+  updateSession(_id: String!, title: String!, summary: String, location:String, presenter:String, start:String): Session
   deleteSession(_id: String!): Session
 
   addLocation(name: String!, description: String): Location
