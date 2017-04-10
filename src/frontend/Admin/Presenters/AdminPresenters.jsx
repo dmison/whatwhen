@@ -8,7 +8,7 @@ const PresenterAdmin = (props) => {
       <h2>Manage Presenters</h2>
       <Link className='btn btn-info btn-sm' to='/admin/presenters/new'>Add Presenter</Link>
       {props.loading?'loading': <PresenterAdminList
-        presenters={props.presenters.presenters}
+        presenters={props.data.presenters}
         deletePresenter={(_id)=>{
           props.deletePresenter( {variables:{presenterID: _id},
                                 refetchQueries: [{
@@ -41,6 +41,6 @@ const deletePresenter = gql`mutation deletePresenter($presenterID: String!){ del
 
 
 export default compose(
-  graphql(allPresenters, {name:'presenters'}),
+  graphql(allPresenters),
   graphql(deletePresenter, {name:'deletePresenter', forceFetch:true})
 )(PresenterAdmin);

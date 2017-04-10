@@ -19,24 +19,20 @@ class SessionUpdate extends React.Component {
 
   componentWillReceiveProps(nextProps){
     console.log('newProps:', nextProps);
-    if(!nextProps.thisSession.loading){
+    if(!nextProps.data.loading){
       this.setState({
-        title: nextProps.thisSession.session.title,
-        summary: nextProps.thisSession.session.summary,
-        location: nextProps.thisSession.session.location,
-        presenter: nextProps.thisSession.session.presenter
+        title: nextProps.data.session.title,
+        summary: nextProps.data.session.summary,
+        location: nextProps.data.session.location,
+        presenter: nextProps.data.session.presenter,
+        locations: nextProps.data.locations,
+        presenters: nextProps.data.presenters
       });
-    }
-    if(!nextProps.allLocations.loading){
-      this.setState({ locations: nextProps.allLocations.locations});
-    }
-    if(!nextProps.allPresenters.loading){
-      this.setState({ presenters: nextProps.allPresenters.presenters});
     }
   }
 
   render(){
-    if(this.props.thisSession.loading && this.props.allLocations.loading && this.props.allPresenters.loading){
+    if(this.props.data.loading){
       console.log('still loading');
       return <div>loading ...</div>;
     } else {
@@ -91,10 +87,13 @@ SessionUpdate.propTypes = {
 };
 
 
-const thisSession = gql`query session($_id: String!){ session(_id: $_id){ _id, title, summary, location { _id, name, description}, presenter { _id, name, email, bio } }}`;
-
-const allLocations = gql`query { locations { _id, name }}`;
-const allPresenters = gql`query { presenters { _id, name, email, bio }}`;
+const query = gql`query session($_id: String!){
+  session(_id: $_id){
+    _id, title, summary, location { _id, name, description}, presenter { _id, name, email, bio }
+  }
+  locations { _id, name }
+  presenters { _id, name, email, bio }
+}`;
 
 const updateSession = gql`mutation updateSession($_id: String!, $title: String!, $summary: String, $location:String, $presenter:String, $start:String){
 	updateSession(_id:$_id, title: $title, summary:$summary, location:$location, presenter:$presenter, start:$start) {
@@ -103,10 +102,8 @@ const updateSession = gql`mutation updateSession($_id: String!, $title: String!,
 }`;
 
 export default compose(
-  graphql(thisSession,{name: 'thisSession', options: (props)=>{
+  graphql(query,{options: (props)=>{
     return { variables: { _id: props.match.params._id}}
   }}),
-  graphql(allLocations, {name: 'allLocations'}),
-  graphql(allPresenters, {name: 'allPresenters'}),
   graphql(updateSession, {name:'save'})
 )(SessionUpdate);

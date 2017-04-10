@@ -77,7 +77,7 @@ const updatePresenter = gql`mutation updatePresenter($_id: String!, $name: Strin
 }`;
 
 export default compose(
-  graphql(thisPresenter,{name: 'data', options: (props)=>{
+  graphql(thisPresenter,{options: (props)=>{
     return { variables: { _id: props.match.params._id}}
   }}),
   graphql(updatePresenter, {name:'save'}) )(PresenterNew);

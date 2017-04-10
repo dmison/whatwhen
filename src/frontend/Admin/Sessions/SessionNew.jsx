@@ -8,8 +8,8 @@ class SessionNew extends React.Component {
     this.state = {
       title: '',
       summary: '',
-      location: '',
-      presenter: '',
+      location: null,
+      presenter: null,
       start:'',
       locations: [],
       presenters: []
@@ -18,14 +18,10 @@ class SessionNew extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if(!nextProps.locations.loading){
+    if(!nextProps.data.loading){
       this.setState({
-        locations: nextProps.locations.locations
-      });
-    }
-    if(!nextProps.presenters.loading){
-      this.setState({
-        presenters: nextProps.presenters.presenters
+        locations: nextProps.data.locations,
+        presenters: nextProps.data.presenters
       });
     }
   }
@@ -77,8 +73,7 @@ SessionNew.propTypes = {
   save: React.PropTypes.func
 };
 
-const allLocations = gql`query { locations { _id, name, description }}`;
-const allPresenters = gql`query { presenters { _id, name, email, bio }}`;
+const locationsAndPresenters = gql`query { locations { _id, name, description } presenters { _id, name, email, bio }}`;
 
 const addSession = gql`mutation addSession($title:String!, $summary:String, $location:String, $presenter:String){
 	addSession(title:$title, summary:$summary, location:$location, presenter:$presenter) {
@@ -86,4 +81,4 @@ const addSession = gql`mutation addSession($title:String!, $summary:String, $loc
   }
 }`;
 
-export default compose( graphql(addSession, {name:'save'}), graphql(allLocations, {name:'locations'}), graphql(allPresenters, {name:'presenters'}) )(SessionNew);
+export default compose( graphql(locationsAndPresenters), graphql(addSession, {name:'save'}) )(SessionNew);

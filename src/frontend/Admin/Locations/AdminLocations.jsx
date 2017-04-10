@@ -8,7 +8,7 @@ const LocationAdmin = (props) => {
       <h2>Manage Locations</h2>
       <Link className='btn btn-info btn-sm' to='/admin/locations/new'>Add Location</Link>
       {props.loading?'loading': <LocationAdminList
-        locations={props.locations.locations}
+        locations={props.data.locations}
         deleteLocation={(_id)=>{
           props.deleteLocation( {variables:{locationID: _id},
                                 refetchQueries: [{
@@ -41,6 +41,6 @@ const deleteLocation = gql`mutation deleteLocation($locationID: String!){ delete
 
 
 export default compose(
-  graphql(allLocations, {name:'locations'}),
+  graphql(allLocations),
   graphql(deleteLocation, {name:'deleteLocation', forceFetch:true})
 )(LocationAdmin);
