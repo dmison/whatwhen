@@ -24,6 +24,7 @@ type Presenter {
 type Location {
   _id: String
   name: String
+  timezone: String
   description: String
 }
 
@@ -61,8 +62,8 @@ type Mutation {
   updateSession(_id: String!, title: String!, summary: String, location:String, presenter:String, start:String): Session
   deleteSession(_id: String!): Session
 
-  addLocation(name: String!, description: String): Location
-  updateLocation(_id: String!, name: String, description: String): Location
+  addLocation(name: String!, description: String, timezone: String): Location
+  updateLocation(_id: String!, name: String, description: String, timezone: String): Location
   deleteLocation(_id: String!): Location
 
   addPresenter(name: String!, email: String, bio: String): Presenter

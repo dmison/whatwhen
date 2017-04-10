@@ -8,6 +8,7 @@ class LocationNew extends React.Component {
     super(props);
     this.state = {
       name: '',
+      timezone: '',
       description: ''
     }
     this._save = this._save.bind(this);
@@ -23,6 +24,7 @@ class LocationNew extends React.Component {
             switch(update.target){
             case 'name': this.setState( { name: update.value}); break;
             case 'description': this.setState( { description: update.value}); break;
+            case 'timezone': this.setState( { timezone: update.value}); break;
             }
           }} />
         <a className='btn btn-default btn-sm' onClick={this._save}>Save</a>
@@ -41,7 +43,7 @@ class LocationNew extends React.Component {
         description: this.state.description
       },
       refetchQueries: [{
-        query: gql`query { locations { _id, name, description }}`
+        query: gql`query { locations { _id, name, timezone, description }}`
       }]
     }
   ).then(()=>{this.props.history.replace('/admin/locations');});
@@ -53,9 +55,8 @@ LocationNew.propTypes = {
   save: React.PropTypes.func
 };
 
-
-const addLocation = gql`mutation addLocation($name:String!, $description:String){
-	addLocation(name:$name, description:$description) {
+const addLocation = gql`mutation addLocation($name:String!, $timezone:String, $description:String){
+	addLocation(name:$name, timezone:$timezone, description:$description) {
     _id
   }
 }`;

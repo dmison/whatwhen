@@ -8,6 +8,7 @@ class LocationNew extends React.Component {
     super(props);
     this.state = {
       name: '',
+      timezone: '',
       description: ''
     }
     this._save = this._save.bind(this);
@@ -17,6 +18,7 @@ class LocationNew extends React.Component {
     if(!nextProps.data.loading){
       this.setState({
         name: nextProps.data.location.name,
+        timezone: nextProps.data.location.timezone,
         description: nextProps.data.location.description
       });
     }
@@ -27,10 +29,12 @@ class LocationNew extends React.Component {
       <div>
         <LocationForm editing={true} location={{
             name: this.state.name,
+            timezone: this.state.timezone,
             description: this.state.description
           }} save={(update)=>{
             switch(update.target){
             case 'name': this.setState( { name: update.value}); break;
+            case 'timezone': this.setState( { timezone: update.value}); break;
             case 'description': this.setState( { description: update.value}); break;
             }
           }} />
@@ -48,10 +52,11 @@ class LocationNew extends React.Component {
       variables:{
         _id: this.props.match.params._id,
         name: this.state.name,
+        timezone: this.state.timezone,
         description: this.state.description
       },
       refetchQueries: [{
-        query: gql`query { locations { _id, name, description }}`
+        query: gql`query { locations { _id, name, timezone, description }}`
       }]
     }
   ).then(()=>{this.props.history.replace('/admin/locations');});
@@ -64,10 +69,10 @@ LocationNew.propTypes = {
 };
 
 
-const thisLocation = gql`query location($_id: String!){ location(_id: $_id){ _id, name, description }}`;
+const thisLocation = gql`query location($_id: String!){ location(_id: $_id){ _id, name, timezone, description }}`;
 
-const updateLocation = gql`mutation updateLocation($_id: String!, $name: String, $description: String){
-	updateLocation(_id:$_id, name: $name, description:$description) {
+const updateLocation = gql`mutation updateLocation($_id: String!, $name: String, $timezone: String, $description: String){
+	updateLocation(_id:$_id, name: $name, timezone:$timezone, description:$description) {
     _id
   }
 }`;

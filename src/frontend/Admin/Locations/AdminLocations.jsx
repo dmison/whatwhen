@@ -36,7 +36,7 @@ LocationAdmin.propTypes = {
   data: React.PropTypes.object
 };
 
-const allLocations = gql`query { locations { _id, name, description } }`;
+const allLocations = gql`query { locations { _id, name, description, timezone } }`;
 
 const deleteLocation = gql`mutation deleteLocation($locationID: String!){ deleteLocation(_id: $locationID){ _id }}`;
 
